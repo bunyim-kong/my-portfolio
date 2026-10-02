@@ -4,11 +4,24 @@ const base = import.meta.env.BASE_URL;
 const copied = ref(false);
 let copyTimer;
 
+async function copyEmail() {
+  try {
+    await navigator.clipboard.writeText("bunyimkong@gmail.com");
+    copied.value = true;
+    clearTimeout(copyTimer);
+    copyTimer = setTimeout(() => {
+      copied.value = false;
+    }, 2500);
+  } catch {
+    window.location.href = "mailto:bunyimkong@gmail.com";
+  }
+}
+
 onUnmounted(() => clearTimeout(copyTimer));
 </script>
 
 <template>
-  <section id="contact" class="contact-section">
+  <section id="contact" class="contact-section" data-scroll-depth>
     <div class="container">
       <div class="contact-top">
         <p class="eyebrow">
@@ -262,5 +275,9 @@ onUnmounted(() => clearTimeout(copyTimer));
 }
 .email-row > a:hover {
   color: var(--accent);
+}
+.contact-arrow {
+  translate: 0 calc(var(--section-depth, 0) * -35px);
+  rotate: calc(var(--section-depth, 0) * 8deg);
 }
 </style>

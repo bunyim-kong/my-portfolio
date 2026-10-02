@@ -35,7 +35,7 @@ onMounted(() => {
     );
     document
       .querySelectorAll(
-        "#work .section-heading, #work .work-toolbar, #work .project-grid, #about .section-heading, .about-grid, .toolkit, #experience .section-heading, .experience-layout, .education, #contact > .container",
+        "#work .section-heading, #work .work-toolbar, #work .project-grid, #about .section-heading, .about-grid, .toolkit, #experience .section-heading, .experience-label, .experience-item, .education, #contact > .container",
       )
       .forEach((element) => {
         element.classList.add("reveal", "reveal-pending");

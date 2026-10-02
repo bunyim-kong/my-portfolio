@@ -10,10 +10,10 @@ const base = import.meta.env.BASE_URL;
         <div>
           <p class="eyebrow">02 / THE PERSON BEHIND THE CODE</p>
         </div>
-        <span class="about-symbol" aria-hidden="true">✳</span>
+        <span class="about-symbol" data-scroll-depth aria-hidden="true">✳</span>
       </div>
       <div class="about-grid">
-        <div class="portrait-wrap">
+        <div class="portrait-wrap" data-scroll-depth>
           <img
             :src="`${base}images/portrait.jpg`"
             alt="Kong Bunyim"
@@ -226,5 +226,22 @@ const base = import.meta.env.BASE_URL;
 }
 .about-copy .text-link {
   margin-top: 22px;
+}
+.about-symbol {
+  rotate: calc(var(--section-depth, 0) * 65deg);
+}
+.portrait-wrap > img {
+  scale: 1.12;
+  translate: 0 calc(var(--section-depth, 0) * 18px);
+}
+[data-motion="off"] .portrait-wrap > img {
+  scale: 1;
+  translate: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .portrait-wrap > img {
+    scale: 1;
+    translate: none;
+  }
 }
 </style>

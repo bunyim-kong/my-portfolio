@@ -313,3 +313,14 @@ body {
     transform: none;
   }
 }
+
+[data-motion="off"] *,
+[data-motion="off"] *::before,
+[data-motion="off"] *::after {
+  animation: none !important;
+  transition: none !important;
+}
+[data-motion="off"] .reveal-pending {
+  opacity: 1;
+  transform: none;
+}

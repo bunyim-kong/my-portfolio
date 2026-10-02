@@ -301,4 +301,16 @@ nav.open {
     transform: translateY(0);
   }
 }
+.site-header::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(var(--page-scroll, 0));
+  transform-origin: left;
+  pointer-events: none;
+}
 </style>

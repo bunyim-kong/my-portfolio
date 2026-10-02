@@ -115,11 +115,13 @@ const visibleProjects = computed(() =>
       tag="div"
       class="project-grid"
       aria-live="polite"
+      data-scroll-depth
     >
       <article
         v-for="(project, index) in visibleProjects"
         :key="project.repo"
         class="project-card"
+        :style="{ '--reveal-delay': `${(index % 3) * 90}ms` }"
       >
         <a
           class="project-image"
@@ -139,11 +141,14 @@ const visibleProjects = computed(() =>
             }}</span
             ><span>↗</span>
           </div>
-          <img
-            :src="`${base}images/${project.image}`"
-            :alt="`${project.name} project preview`"
-            loading="lazy"
-          /><span class="image-action"
+          <div class="project-preview">
+            <img
+              :src="`${base}images/${project.image}`"
+              :alt="`${project.name} project preview`"
+              loading="lazy"
+            />
+          </div>
+          <span class="image-action"
             >{{ project.url ? "Visit website" : "View project" }} ↗</span
           ></a
         >
@@ -241,10 +246,16 @@ const visibleProjects = computed(() =>
 }
 .project-image img {
   width: 100%;
-  height: calc(100% - 26px);
+  height: 100%;
   object-fit: cover;
   object-position: center;
   transition: transform 0.5s;
+  scale: 1.12;
+  translate: 0 calc(var(--section-depth, 0) * 14px);
+}
+.project-preview {
+  height: calc(100% - 26px);
+  overflow: hidden;
 }
 .project-image:hover img {
   transform: scale(1.04);
@@ -373,7 +384,7 @@ const visibleProjects = computed(() =>
     height: 29px;
     font-size: 8px;
   }
-  .project-image img {
+  .project-preview {
     height: calc(100% - 29px);
   }
   .project-card > p {
@@ -464,5 +475,30 @@ const visibleProjects = computed(() =>
 }
 .project-leave-active {
   display: none;
+  animation: none !important;
+}
+.project-grid.reveal:not(.reveal-pending) > .project-card {
+  animation: project-reveal 0.7s var(--reveal-delay, 0ms)
+    cubic-bezier(0.2, 0.65, 0.3, 1) both;
+}
+@keyframes project-reveal {
+  from {
+    opacity: 0;
+    translate: 0 24px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+[data-motion="off"] .project-image img {
+  scale: 1;
+  translate: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-image img {
+    scale: 1;
+    translate: none;
+  }
 }
 </style>
